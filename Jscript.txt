@@ -1,0 +1,44 @@
+const products = [
+  { id: 1, name: "Laptop", price: 79999, image: "https://via.placeholder.com/150" },
+  { id: 2, name: "Smartphone", price: 39999, image: "https://via.placeholder.com/150" },
+  { id: 3, name: "Headphones", price: 4999, image: "https://via.placeholder.com/150" },
+];
+
+const cart = [];
+
+const productList = document.getElementById('product-list');
+const cartItems = document.getElementById('cart-items');
+const totalDisplay = document.getElementById('total');
+
+function addToCart(product) {
+  cart.push(product);
+  renderCart();
+}
+
+function renderProducts() {
+  products.forEach(product => {
+    const productDiv = document.createElement('div');
+    productDiv.className = 'product';
+    productDiv.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toLocaleString()}</p>
+      <button onclick='addToCart(${JSON.stringify(product)})'>Add to Cart</button>
+    `;
+    productList.appendChild(productDiv);
+  });
+}
+
+function renderCart() {
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `${item.name} - ₹${item.price}`;
+    cartItems.appendChild(li);
+    total += item.price;
+  });
+  totalDisplay.textContent = total;
+}
+
+renderProducts();
